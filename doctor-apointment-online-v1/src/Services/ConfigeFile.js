@@ -18,6 +18,12 @@ const apiClient =axios.create({
     AddUser(RegInfo)
     {
         return apiClient.post('AddUserInfo',JSON.stringify(RegInfo) )
+    },
+    // Add Speciality
+    // Registration API
+    AddSpeciality(SpecialityInfo)
+    {
+        return apiClient.post('AddUserInfo',JSON.stringify(SpecialityInfo) )
     }
  }
 
