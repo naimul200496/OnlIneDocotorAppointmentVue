@@ -53,12 +53,12 @@ const userModel = {
     actions:{
       loginuserdata(responseData){
         //console.log('ResponseData:',responseData);
-       console.log('Id=',responseData[0].FirstName)
-       userModel.Id=responseData[0].Id
-        userModel.FirstName = responseData[0].FirstName
-        userModel.LastName=responseData[0].LastName
-        userModel.Email=responseData[0].Email
-        userModel.Phone=responseData[0].Phone
+       console.log('Id=',responseData.FirstName)
+        userModel.Id=responseData.Id
+        userModel.FirstName = responseData.FirstName
+        userModel.LastName=responseData.LastName
+        userModel.Email=responseData.Email
+        userModel.Phone=responseData.Phone
         //userModel.ImageUrl=responseData[0].ImageUrl 
         userModel.ImageUrl=`/img/profiles/avatar-01.jpg`
         userModel.isAuthenticated=true

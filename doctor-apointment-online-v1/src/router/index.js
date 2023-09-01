@@ -54,7 +54,7 @@ const router = createRouter({
           path: '/AdminPage/DashBoard',
           name: 'DashBoard',
           component: DashBoard,
-          meta:{Role:['Admin','Patient']}
+          //meta:{Role:['Admin','Patient']}
         },
         {
           path: '/AdminPage/AppointmentPage',
