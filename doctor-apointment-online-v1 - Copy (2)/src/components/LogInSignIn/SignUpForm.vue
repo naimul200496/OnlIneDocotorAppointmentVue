@@ -17,9 +17,9 @@
                
                 <!-- Register Form -->
                 <form @submit="onSubmitReg">
-					<div v-if="error_status" class="invalid-feedback"> 
-						{{ error_message }}
-					</div>
+                  <div v-if="error" class="alert alert-danger" role="alert">
+                    {{ error }}
+                  </div>
                   <div class="form-group form-focus">
                     <input
                       v-model.trim="form.RegFirstName"
@@ -100,7 +100,10 @@
 </template>
 <script>
 import { RouterLink } from 'vue-router'
-import ServicesApi from '../../Services/ConfigeFile.js'
+//import ServicesApi from '../../Services/ConfigeFile.js'
+import { useFirebaseAuth,useFirestore} from 'vuefire'
+import { createUserWithEmailAndPassword} from 'firebase/auth'
+import { doc, setDoc } from "firebase/firestore";
 export default {
   name: 'SignUpForm',
   components: {
@@ -124,7 +127,10 @@ export default {
     async onSubmitReg(event) {
       console.log('event', event)
       if (!event.preventDefault()) {
-        var RegistrationInfo = {
+        const db = useFirestore() // Connect Firstore Database
+		    const auth = useFirebaseAuth() // Get userAuthentication
+        
+       /*  var RegistrationInfo = {
           FirstName: this.form.RegFirstName,
           LastName: this.form.RegLastName,
           Email: this.form.Regemail,
@@ -132,8 +138,37 @@ export default {
           Password: this.form.RegPassword,
           ImageUrl: '',
           IsActive: true
-        }
-       await ServicesApi.AddUser(RegistrationInfo)
+        } */
+
+        
+        await createUserWithEmailAndPassword(auth, this.form.Regemail, this.form.RegPassword)
+        .then((userCredential) => {
+          // After Creation The user
+          const user = userCredential.user;
+          console.log('User',user)
+          console.log('UserId',user.uid)
+          setDoc(doc(db, 'users', user.uid), {
+            FirstName: this.form.RegFirstName,
+            LastName: this.form.RegLastName,
+            isactive: true,
+            phone:this.form.RegPhone,
+            usertype:'admin',
+          });
+          {this.$router.push({ name: 'LogIn' })} 
+        })
+          .catch((error) => {
+           
+            const errorMessage = error.message;
+            console.log(errorMessage)
+            // ..
+          });
+
+          
+
+
+
+
+     /*   await ServicesApi.AddUser(RegistrationInfo)
           .then((response) => {
 			if (response.data==='Added Successfully' && response.status===200)
            {this.$router.push({ name: 'LogIn' })} 
@@ -144,7 +179,7 @@ export default {
 			this.error_message = `Error Message Name:${error.name} [Message:${error.message}]`
 			//console.log(this.error_message)
            // console.log(error)
-          })
+          }) */
 		  
       }
     }

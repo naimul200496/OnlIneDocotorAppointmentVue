@@ -1,6 +1,6 @@
 import axios from 'axios'
 const apiClient =axios.create({
-    baseURL: 'http://localhost:5036/api/OnlineAppointmentAPI/',
+    baseURL: 'http://localhost:5036/api/SpecialityAPI/',
     withCredentials:false,
     headers:{
         Accept:'application/json',
@@ -10,14 +10,10 @@ const apiClient =axios.create({
     },
 })
  export default {
-    // Login API
-    checkUserExist(email,password){
-        return apiClient.get('CheckUserExist?email='+email+'&password='+password)
-    },
-    // Registration API
-    AddUser(RegInfo)
+   
+    AddSpeciality(name,filename)
     {
-        return apiClient.post('AddUserInfo',JSON.stringify(RegInfo) )
+        return apiClient.post('AddSpeciality?formFile='+filename+'&SpecialityName='+name )
     }
  }
 

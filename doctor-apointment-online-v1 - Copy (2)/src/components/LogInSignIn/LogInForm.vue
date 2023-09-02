@@ -36,11 +36,9 @@
                     />
                     <label class="focus-label">Password</label>
                   </div>
-                 <!--  <div class="text-right">
-					           <RouterLink :to="{ name: 'ForgotPassword' }">
-                      <a class="forgot-link" href="#">Forgot Password ?</a>
-                    </RouterLink>
-                  </div> -->
+                  <div class="text-right">
+					<RouterLink :to="{ name: 'ForgotPassword' }">    <a class="forgot-link" href="#">Forgot Password ?</a></RouterLink>
+                  </div>
                   <button class="btn btn-primary btn-block btn-lg login-btn" type="submit">
                     Login
                   </button>
@@ -67,13 +65,12 @@
 </template>
 <script>
 import { RouterLink } from 'vue-router'
-import {getuserInfo,getUserOtherInfo} from '../../Services/UserInfo.js'
 import { useFirebaseAuth,useDocument,useFirestore} from 'vuefire'
-//import { signInWithEmailAndPassword } from 'firebase/auth'
+import { signInWithEmailAndPassword } from 'firebase/auth'
 
 import { collection, doc} from 'firebase/firestore'
-import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'
-//import { doc, getDoc } from "firebase/firestore";
+/* import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'
+import { doc, getDoc } from "firebase/firestore"; */
 //import ServicesApi from '../../Services/ConfigeFile.js'
 import { userUserStore } from '../../stores/StoreFile'
 
@@ -89,8 +86,7 @@ export default {
         loginPasswd: '123456'
       },
       error: '',
-	    userUid:'',
-      test1:null,
+	  userUid:''
     }
   },
   components: {
@@ -104,60 +100,44 @@ export default {
     async onSubmit(event) {
       if (!event.preventDefault()) {
 
-        let user_uid_info = await getuserInfo(this.form.loginemail, this.form.loginPasswd)
-        console.log('user_uid_info',user_uid_info)
-        if(user_uid_info){
-          const db = useFirestore()
-          const responseData =  useDocument(doc(collection(db, 'users'), user_uid_info.uid))
-			       //console.log(responseData)
-			       //console.log('Active ',responseData._rawValue.isactive)
-		       if(responseData._rawValue.isactive){
-                let userInfo={
-                Id: this.userUid,  
-                FirstName : responseData._rawValue.LastName,
-                LastName:responseData._rawValue.FirstName,
-                Email:this.form.loginemail,
-                phone:responseData._rawValue.Phone,
-                //IsActive:responseData._rawValue.isactive,
-              }
-            this.$router.push({ name: 'DashBoard' });
-            this.userStore.loginuserdata(userInfo)
-        }
-      }
-       
-        
-		/* const db = useFirestore() // Connect Firstore Database
+		const db = useFirestore() // Connect Firstore Database
 		const auth = useFirebaseAuth() // Get userAuthentication
-    await signInWithEmailAndPassword(auth, this.form.loginemail, this.form.loginPasswd)
+         await signInWithEmailAndPassword(auth, this.form.loginemail, this.form.loginPasswd)
           .then((userCredential) => {
-             const user = userCredential.user
-			       this.userUid=user.uid
-			       //console.log('UserID',user.uid)
-             const responseData =  useDocument(doc(collection(db, 'users'), this.userUid))
-			       //console.log(responseData)
-			       //console.log('Active ',responseData._rawValue.isactive)
-		       if(responseData._rawValue.isactive){
-                let userInfo={
-                Id: this.userUid,  
-                FirstName : responseData._rawValue.LastName,
-                LastName:responseData._rawValue.FirstName,
-                Email:user.email,
-                phone:responseData._rawValue.Phone,
-                //IsActive:responseData._rawValue.isactive,
-              }
-            this.$router.push({ name: 'DashBoard' });
-            this.userStore.loginuserdata(userInfo)
-            }
-          else{this.error='User Is Deactivated!'}
-         })
-        .catch((error) => {
+            const user = userCredential.user
+			this.userUid=user.uid
+			//console.log('UserID',user.uid)
+            const responseData =  useDocument(doc(collection(db, 'users'), this.userUid))
+			//console.log(responseData)
+			//console.log('Active ',responseData._rawValue.isactive)
+		  if(responseData._rawValue.isactive)
+		  {
+				let userInfo={
+				Id: this.userUid,  
+				FirstName : responseData._rawValue.LastName,
+				LastName:responseData._rawValue.FirstName,
+				Email:user.email,
+				phone:responseData._rawValue.Phone,
+				//IsActive:responseData._rawValue.isactive,
+			}
+			
+			this.$router.push({ name: 'DashBoard' });
+			this.userStore.loginuserdata(userInfo)
+			
+		  }
+		  else{this.error='User Is Deactivated!'}
+
+
+          })
+          .catch((error) => {
             const errorCode = error.code
-			      console.log('errorCode',errorCode)
+			console.log('errorCode',errorCode)
             const errorMessage = error.message
-		       	console.log('ErrMessage',errorMessage)
-			      this.error='ErrMessage' + errorMessage
-			  })
-		   */
+			console.log('ErrMessage',errorMessage)
+			this.error='ErrMessage' + errorMessage
+			
+          })
+		  
           
 		
 

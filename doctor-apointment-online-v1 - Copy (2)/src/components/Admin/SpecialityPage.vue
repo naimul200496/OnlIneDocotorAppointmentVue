@@ -14,7 +14,7 @@
                             </ul>
                         </div>
                         <div class="col-sm-5 col">
-                            <a href="#Add_Specialities_details" data-toggle="modal" class="btn btn-primary float-right mt-2">Add</a>
+                            <a href="#" @click="OpenCloseFun" data-toggle="modal" class="btn btn-primary float-right mt-2">Add</a>
                         </div>
                     </div>
                 </div>
@@ -160,34 +160,37 @@
         <!-- /Page Wrapper -->
      
         <!-- Add Modal -->
-			<div class="modal fade" id="Add_Specialities_details" aria-hidden="true" role="dialog">
+			<div v-if="OpenClose" class="modal fade show" aria-modal="true" id="Add_Specialities_details" role="dialog" 
+            style="display: block;">
 				<div class="modal-dialog modal-dialog-centered" role="document" >
 					<div class="modal-content">
 						<div class="modal-header">
 							<h5 class="modal-title">Add Specialities</h5>
-							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<button type="button" @click="OpenCloseFun()" class="close" aria-label="Close">
 								<span aria-hidden="true">&times;</span>
 							</button>
 						</div>
 						<div class="modal-body">
-							<form>
+                            <slot>
+							<form @submit.prevent="onSubmitSpeciality">
 								<div class="row form-row">
 									<div class="col-12 col-sm-6">
 										<div class="form-group">
-											<label>Specialities</label>
-											<input type="text" class="form-control">
+											<label>Specialitie Name</label>
+											<input type="text" v-model="SpecalityName" class="form-control" required>
 										</div>
 									</div>
 									<div class="col-12 col-sm-6">
 										<div class="form-group">
 											<label>Image</label>
-											<input type="file"  class="form-control">
+											<input type="file" id="file"  v-on:change="handleFileUpload($event)" class="form-control">
 										</div>
 									</div>
 									
 								</div>
 								<button type="submit" class="btn btn-primary btn-block">Save Changes</button>
 							</form>
+                        </slot>
 						</div>
 					</div>
 				</div>
@@ -195,13 +198,59 @@
 			<!-- /ADD Modal -->
 </template>
 <script>
-/* export default {
+
+import ServicesApi from '../../Services/SpecialityAPI.js'
+export default {
     name:'SpecialityPage',
     data(){
         return{
-            showModal:false,
+             OpenClose:this.visible,
+             SpecalityName:'',
+             file:''
         }
+    },
+  
+props:{
+    visible:Boolean,
+    varriant: String,
+},
+methods:{
+OpenCloseFun(){
+    this.OpenClose=!this.OpenClose;
+},
+handleFileUpload(){
+    this.file = event.target.files[0];
+  },
+  async onSubmitSpeciality(event) {
+    if (!event.preventDefault()) {
+       /*  let InputedData={
+            Name:this.SpecalityName,
+            fileName:this.file,
+        } */
+       // console.log(InputedData);
+        await ServicesApi.AddSpeciality(this.SpecalityName,this.file)
+          .then((response) => {
+			if (response.status===200)
+           {console.log('Reg', response)} 
+            
+          })
+          .catch((error) => {
+			this.error_status = true
+			this.error_message = `Error Message Name:${error.name} [Message:${error.message}]`
+			//console.log(this.error_message)
+           // console.log(error)
+          })
+          this.OpenClose=false
     }
-} */
+  }
+},
+watch:{
+    visible:function(newVal,oldVal){
+        this.OpenClose=newVal
+        console.log('new val',newVal)
+        console.log('oLD val',oldVal)
+    }
+}
+}
 </script>
 <style></style>

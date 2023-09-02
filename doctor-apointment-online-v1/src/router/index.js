@@ -5,6 +5,7 @@ import NotFound from '../views/NotFound.vue'
 import HomeView from '../views/HomeView.vue'
 import LogIn from '../views/LogIn.vue'
 import SignUp from '../views/SignUp.vue'
+import ForgotPassword from '../views/ForgotPassword.vue'
 
 import AdminPage from '../views/AdminPage.vue'
 import DashBoard from '../components/Admin/DashBoard.vue'
@@ -36,6 +37,15 @@ const router = createRouter({
       path: '/SignUp',
       name: 'SignUp',
       component: SignUp,
+      meta: {
+        auth: false,
+      }
+    }
+    ,
+    {
+      path: '/ForgotPassword',
+      name: 'ForgotPassword',
+      component: ForgotPassword,
       meta: {
         auth: false,
       }
