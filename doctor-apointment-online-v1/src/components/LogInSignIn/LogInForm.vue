@@ -1,5 +1,9 @@
 <template>
   <!-- Page Content -->
+  <br>
+  <br>
+  <br>
+  
   <div class="content" style="min-height: 55vh; background-color: #fff">
     <div class="container-fluid">
       <div class="row">
@@ -36,6 +40,12 @@
                     />
                     <label class="focus-label">Password</label>
                   </div>
+                  <div class="text-right">
+
+                    <RouterLink :to="{ name: 'ForgotPassword' }">
+                      <a class="forgot-link" href="#">Forgot Password ?</a>
+                    </RouterLink>
+                  </div>
                  <!--  <div class="text-right">
 					           <RouterLink :to="{ name: 'ForgotPassword' }">
                       <a class="forgot-link" href="#">Forgot Password ?</a>
@@ -66,16 +76,17 @@
   <!-- /Page Content -->
 </template>
 <script>
+import { userUserStore } from '../../stores/userStore'
 import { RouterLink } from 'vue-router'
-import {getuserInfo,getUserOtherInfo} from '../../Services/UserInfo.js'
-import { useFirebaseAuth,useDocument,useFirestore} from 'vuefire'
+import {getuserInfo,getCurrentUserInfo} from '../../Services/UserInfo.js'
+//import { useDocument,useFirestore} from 'vuefire'
 //import { signInWithEmailAndPassword } from 'firebase/auth'
 
-import { collection, doc} from 'firebase/firestore'
-import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'
+//import { collection, doc} from 'firebase/firestore'
+//import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'
 //import { doc, getDoc } from "firebase/firestore";
 //import ServicesApi from '../../Services/ConfigeFile.js'
-import { userUserStore } from '../../stores/StoreFile'
+//import { userUserStore } from '../../stores/StoreFile'
 
 
 
@@ -91,6 +102,7 @@ export default {
       error: '',
 	    userUid:'',
       test1:null,
+      isactiveuser:false
     }
   },
   components: {
@@ -103,89 +115,45 @@ export default {
   methods: {
     async onSubmit(event) {
       if (!event.preventDefault()) {
-
-        let user_uid_info = await getuserInfo(this.form.loginemail, this.form.loginPasswd)
-        console.log('user_uid_info',user_uid_info)
-        if(user_uid_info){
-          const db = useFirestore()
-          const responseData =  useDocument(doc(collection(db, 'users'), user_uid_info.uid))
-			       //console.log(responseData)
-			       //console.log('Active ',responseData._rawValue.isactive)
-		       if(responseData._rawValue.isactive){
-                let userInfo={
-                Id: this.userUid,  
-                FirstName : responseData._rawValue.LastName,
-                LastName:responseData._rawValue.FirstName,
-                Email:this.form.loginemail,
-                phone:responseData._rawValue.Phone,
-                //IsActive:responseData._rawValue.isactive,
-              }
+        const success= await this.userStore.login(this.form.loginemail,this.form.loginPasswd)
+        console.log('sucess',success)
+        if(success){
+          const data = this.userStore.userInfo
+          console.log('dddd',data.usertytpe)
+          if(data.usertytpe=='Patient'){
+            this.$router.push({ name: 'PateintView' });
+          }
+          if(data.usertytpe=='Admin'){
             this.$router.push({ name: 'DashBoard' });
-            this.userStore.loginuserdata(userInfo)
+          }
+
+
+           console.log(data)
         }
-      }
+
+       // console.log('getuserInfo',await getuserInfo(this.form.loginemail,this.form.loginPasswd))
        
+/* 
+       if(getuserInfo(this.form.loginemail,this.form.loginPasswd)){
+        //console.log('Connected')
+          let getcurrentuser= await getCurrentUserInfo()
+          //console.log('Userdatdddd',getcurrentuser)
+          if(Object.keys(getcurrentuser).length> 0 ){
+          //console.log('ssss',getcurrentuser.usertype)
+          this.userStore.loginuserdata(getcurrentuser)
+
+          if(getcurrentuser.usertype==='admin'){
+                this.$router.push({ name: 'DashBoard' });
+          }
+          if(getcurrentuser.usertype==='patient'){
+            this.$router.push({ name: 'PateintView' });
+          }
+        }
+        else{this.error= 'Something went wrong. Please try agian'}
+     }
+     else{this.error= 'You are not authorized to access this application'}  */
         
-		/* const db = useFirestore() // Connect Firstore Database
-		const auth = useFirebaseAuth() // Get userAuthentication
-    await signInWithEmailAndPassword(auth, this.form.loginemail, this.form.loginPasswd)
-          .then((userCredential) => {
-             const user = userCredential.user
-			       this.userUid=user.uid
-			       //console.log('UserID',user.uid)
-             const responseData =  useDocument(doc(collection(db, 'users'), this.userUid))
-			       //console.log(responseData)
-			       //console.log('Active ',responseData._rawValue.isactive)
-		       if(responseData._rawValue.isactive){
-                let userInfo={
-                Id: this.userUid,  
-                FirstName : responseData._rawValue.LastName,
-                LastName:responseData._rawValue.FirstName,
-                Email:user.email,
-                phone:responseData._rawValue.Phone,
-                //IsActive:responseData._rawValue.isactive,
-              }
-            this.$router.push({ name: 'DashBoard' });
-            this.userStore.loginuserdata(userInfo)
-            }
-          else{this.error='User Is Deactivated!'}
-         })
-        .catch((error) => {
-            const errorCode = error.code
-			      console.log('errorCode',errorCode)
-            const errorMessage = error.message
-		       	console.log('ErrMessage',errorMessage)
-			      this.error='ErrMessage' + errorMessage
-			  })
-		   */
-          
-		
-
-
-		
-   
-
-        /* ServicesApi.checkUserExist(this.form.loginemail,this.form.loginPasswd)
-		   .then((response)=>{
-			if(response.data.length>0)
-			{
-				this.userStore.loginuserdata(response.data)
-			//console.log('Datasa',response.data)
-			this.$router.push({ name: 'DashBoard' });
-			}
-			else{
-				this.error='Invalid UserName/Password!'
-			}
-			
-		  })
-		  .catch((error)=>{
-			console.log(error)
-		  }) */
-
-        //console.log(this.form.loginemail);
-        //alert('Loggin Successfully. ' + this.form.loginemail)
-
-        //this.$router.push({ name: 'DashBoard' });
+    
       }
     }
   }

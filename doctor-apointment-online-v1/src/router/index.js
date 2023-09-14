@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import { userUserStore } from '../stores/StoreFile'
+import { userUserStore } from '../stores/userStore'
 
 import NotFound from '../views/NotFound.vue'
 import HomeView from '../views/HomeView.vue'
@@ -11,6 +11,12 @@ import AdminPage from '../views/AdminPage.vue'
 import DashBoard from '../components/Admin/DashBoard.vue'
 import AppointmentPage from '../components/Admin/AppointmentPage.vue'
 import SpecialityPage from '../components/Admin/SpecialityPage.vue'
+import DoctorList from '../components/Admin/DoctorList.vue'
+import AddDoctor from '../components/Admin/AddDoctor.vue'
+
+import PateintView from '../views/PatientView.vue'
+import SearchDoctor from '../components/Patient/SearchDoctor.vue'
+import BookingPage from '../components/Patient/BookingPage.vue'
 
 
 const router = createRouter({
@@ -76,12 +82,35 @@ const router = createRouter({
           name: 'SpecialityPage',
           component: SpecialityPage,
         },
+        {
+          path: '/AdminPage/DoctorList',
+          name: 'DoctorList',
+          component: DoctorList,
+        },
+        
+        {
+          path: '/AdminPage/AddDoctor',
+          name: 'AddDoctor',
+          component: AddDoctor,
+        },
         
        
       ]
-    }
-    
-    ,
+    },
+    // Pateint Page
+    {
+      path: '/PateintView',
+      name: 'PateintView',
+      component: PateintView,
+      meta: {
+        auth: true,
+      },
+      children:[
+        { path:'/PateintView/SearchDoctor',name:'SearchDoctor',component:SearchDoctor},
+        { path:'/PateintView/BookingPage',name:'BookingPage',component:BookingPage},
+       
+      ],
+    },
     {
       path: '/:catchAll(.*)',
       name: 'NotFound',

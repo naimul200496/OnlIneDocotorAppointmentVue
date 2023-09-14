@@ -26,7 +26,8 @@
               
             </li>
             <li>
-              <a href="#"><i class="fe fe-user-plus"></i> <span>Doctors</span></a>
+             <RouterLink :to="{ name: 'DoctorList' }"><i class="fe fe-user-plus"></i>
+               <span>Doctors</span></RouterLink>
             </li>
             <li>
               <a href="#"><i class="fe fe-user"></i> <span>Patients</span></a>

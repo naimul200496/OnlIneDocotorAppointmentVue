@@ -169,7 +169,7 @@
   <!-- /Header -->
 </template>
 <script>
-import { userUserStore } from '../stores/StoreFile.js'
+import { userUserStore } from '../../stores/StoreFile.js'
 
 export default {
   name: 'UserHeaderPart',
