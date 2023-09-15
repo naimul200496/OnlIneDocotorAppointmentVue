@@ -35,62 +35,28 @@
                   Specialities: {{ doctor. specialization}}
                   
                 </h5>
-               <!--  <div class="rating">
-                  <i class="fas fa-star filled"></i>
-                  <i class="fas fa-star filled"></i>
-                  <i class="fas fa-star filled"></i>
-                  <i class="fas fa-star filled"></i>
-                  <i class="fas fa-star"></i>
-                  <span class="d-inline-block average-rating">(17)</span>
-                </div> -->
-               <!--  <div class="clinic-details">
-                  <p class="doc-location"><i class="fas fa-map-marker-alt"></i>
-                     {{ country}}, {{ provience}}</p>
-                  <ul class="clinic-gallery">
-                    <li>
-                      <a href="assets/img/features/feature-01.jpg" data-fancybox="gallery">
-                        <img src="assets/img/features/feature-01.jpg" alt="Feature" />
-                      </a>
-                    </li>
-                    <li>
-                      <a href="assets/img/features/feature-02.jpg" data-fancybox="gallery">
-                        <img src="assets/img/features/feature-02.jpg" alt="Feature" />
-                      </a>
-                    </li>
-                    <li>
-                      <a href="assets/img/features/feature-03.jpg" data-fancybox="gallery">
-                        <img src="assets/img/features/feature-03.jpg" alt="Feature" />
-                      </a>
-                    </li>
-                    <li>
-                      <a href="assets/img/features/feature-04.jpg" data-fancybox="gallery">
-                        <img src="assets/img/features/feature-04.jpg" alt="Feature" />
-                      </a>
-                    </li>
-                  </ul>
-                </div> -->
-                <!-- <div class="clinic-services">
-                  <span>Dental Fillings</span>
-                  <span> Whitneing</span>
-                </div> -->
+                <p><i class="fas fa-map-marker-alt"></i> {{ doctor.country}}, {{ doctor.provience}}</p>
+                <div class="clinic-booking">
+                  <a class="view-pro-btn" href="doctor-profile.html">View Profile</a>
+                  <a class="apt-btn" href="#" @click="goBookAppointment(`${doctor.id}`)">Book Appointment</a>
+                </div>
+             
               </div>
+              
             </div>
             <div class="doc-info-right">
               <div class="clini-infos">
                 <ul>
                   <li><i class="far fa-thumbs-up"></i> 98%</li>
                   <li><i class="far fa-comment"></i> 17 Feedback</li>
-                  <li><i class="fas fa-map-marker-alt"></i> Florida, USA</li>
+                  <li><i class="fas fa-map-marker-alt"></i> {{ doctor.country}}, {{ doctor.provience}}</li>
                   <li>
-                    <i class="far fa-money-bill-alt"></i> $300 - $1000
+                    <i class="far fa-money-bill-alt"></i> ${{ doctor.pricing }}
                     <i class="fas fa-info-circle" data-toggle="tooltip" title="Lorem Ipsum"></i>
                   </li>
                 </ul>
               </div>
-              <div class="clinic-booking">
-                <a class="view-pro-btn" href="doctor-profile.html">View Profile</a>
-                <a class="apt-btn" href="booking.html">Book Appointment</a>
-              </div>
+              
             </div>
           </div>
         </div>
@@ -125,6 +91,13 @@ data(){
     await this.docotorInfo.getAllDoctorList()
    this.doctorList = await this.docotorInfo.getAllDoctorInfo
    console.log('sssssss',this.doctorList)
+  },
+  methods:{
+    goBookAppointment(id){
+      console.log(id)
+      this.$router.push({name: 'BookingPage'});
+
+    }
   }
 }
 </script>

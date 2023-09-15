@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { registerDoctorProfile,updateUserProfile,addDoctorData,
   getDoctorListFromFireStore,deleteFireUser } from '../Services/userFirebase'
-  import {uploadDocImage} from '../Services/FireFileBucket'
+  import {uploadPicture} from '../Services/FireFileBucket'
 
 
 
@@ -55,8 +55,9 @@ export const useStoreAddDoctor = defineStore('country', {
      },
      async uploadProfileImage(file) {
         
-      const imageFilePath = `${file.name}`;
-      const url = await uploadDocImage(imageFilePath, file);
+      const imageFilePath = `${self.crypto.randomUUID()}_${file.name}`;
+      console.log('ImageName',imageFilePath)
+      const url =  await uploadPicture(file);
 
       if(!url || url.length == 0) {
         return null;

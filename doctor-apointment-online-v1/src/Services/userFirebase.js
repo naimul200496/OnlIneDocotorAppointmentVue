@@ -95,7 +95,7 @@ export async function signout() {
 });
 }
 
-export  function getDoctorListFromFireStore(){
+export function getDoctorListFromFireStore(){
  
     const db = useFirestore();
     const todos =   useCollection(collection(db, 'doctorList'))

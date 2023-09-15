@@ -1,7 +1,13 @@
 import { useFirebaseStorage, useStorageFile } from 'vuefire';
-import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject  } from 'firebase/storage';
+import { getStorage, ref as storageRef , uploadBytes, getDownloadURL, deleteObject  } from 'firebase/storage';
 
-export async function uploadDocImage(imageName, file) {
+
+/* import { ref as storageRef } from 'firebase/storage'
+import { useFirebaseStorage, useStorageFile } from 'vuefire' */
+
+
+
+/* export async function uploadDocImage(imageName, file) {
     debugger;
     const storage = useFirebaseStorage();
     const imageRef = ref(storage, `Images/doctor/${imageName}`);
@@ -9,10 +15,16 @@ export async function uploadDocImage(imageName, file) {
     const url = await getDownloadURL(imageRef);
     console.log(url)
 
-  /*   uploadBytes(imageRef, file).then((snapshot) => {
-        console.log('Uploaded a blob or file!',snapshot);
-      });
-      const url = await getDownloadURL(imageRef); */
 
     return url;
+} */
+
+
+
+export async function uploadPicture(file) {
+  console.log(file)
+  const storage = useFirebaseStorage()
+  const mountainFileRef = storageRef(storage, `images/${file.name}`)
+  console.log(mountainFileRef)
+ 
 }
