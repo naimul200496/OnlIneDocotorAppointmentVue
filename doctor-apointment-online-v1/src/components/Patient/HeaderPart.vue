@@ -32,11 +32,11 @@
 								<a href="#">Patients <i class="fa-chevron-down"></i></a>
 								<ul class="submenu">
 									<li> <RouterLink :to="{ name: 'SearchDoctor' }"><a href="#">Search Doctor</a></RouterLink></li>
-									<li><a href="#">Doctor Profile</a></li>
+									<!-- <li><a href="#">Doctor Profile</a></li> -->
 									<li><a href="#"><RouterLink :to="{ name: 'BookingPage' }">Booking</RouterLink></a></li>
-									<li><a href="#">Checkout</a></li>
-									<li><a href="#">Booking Success</a></li>
-									<li class="active"><a href="#">Patient Dashboard</a></li>
+									<!-- <li><a href="#">Checkout</a></li> -->
+									<!-- <li><a href="#">Booking Success</a></li> -->
+									<li class="active"><a href="#"><RouterLink :to="{ name: 'PatientDashboard' }">Patient Dashboard</RouterLink></a></li>
 									<li><a href="#">Favourites</a></li>
 									<li><a href="#">Chat</a></li>
 									<li><a href="#">Profile Settings</a></li>

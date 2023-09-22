@@ -53,6 +53,18 @@ export async function addDoctorData(doctorInfo){
     const userRef = doc(db, 'doctorList', doctorInfo.id);
     await setDoc(userRef, doctorInfo);
 }
+// GetDoctorinfo
+export async function getFireDoctorData(id){
+    const db = useFirestore();
+    const docRef = doc(db,'doctorList', id);
+    const docSnap = await getDoc(docRef);
+    
+    if(docSnap.exists()) {
+        return docSnap.data();
+    }
+
+    return null;
+}
 
 export async function addUserData(user)  {
     const db = useFirestore();
@@ -136,4 +148,47 @@ export async function deleteFireUser(doctid)  {
    /*  if(userSnap.exists()) {
         await deleteDoc(userRef);
     } */
+}
+
+export async function AddAppointmentInfo(appointmentInfo){
+    const db = useFirestore();
+    const appoitnmentlist = doc(db, 'appointmentList', appointmentInfo.document_id);
+    await setDoc(appoitnmentlist, appointmentInfo);
+}
+
+export async function getAllAppointmentList(patientId){
+    const allAppointmentdata=[]
+  /*  console.log('PID',patientId);
+    const db = useFirestore();
+   const allAppointment =   await useCollection(collection(db, 'appointmentList'))
+  const  patientAppointmentCommited = allAppointment.filter((c)=>c.patientId===patientId)
+console.log('allAppointment',patientAppointmentCommited) */
+     // return patientAppointmentCommited
+     const db = useFirestore();
+     const querySnapshot = await getDocs(collection(db, "appointmentList"));
+    querySnapshot.forEach((doc) => {
+
+  console.log('y',doc.data().patientId)
+  if(doc.data().patientId===patientId){
+    (async () => {
+        const doctInfo= await getFireDoctorData(doc.data().doctorId)
+        allAppointmentdata.push({
+            'id':doc.data().document_id,
+            'doctorname':`${doctInfo.docFirstName} ${doctInfo.docLastName}`,
+            'doctorPhot':doctInfo.imageUrl,
+            'specialization':doctInfo.specialization,
+            'appointmentDate':doc.data().appointmentDate,
+            'appointmentTime':doc.data().appointmentTime,
+            'bookingDate':doc.data().bookingDate,
+            'totalAmount':doc.data().totalAmount,
+            'followupdate':'--',
+            'status':'Pending'
+    
+        })
+    })()
+
+   
+  }
+});
+  return allAppointmentdata;   
 }
