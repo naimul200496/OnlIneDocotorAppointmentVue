@@ -78,7 +78,8 @@
 <script>
 import { userUserStore } from '../../stores/userStore'
 import { RouterLink } from 'vue-router'
-import {getuserInfo,getCurrentUserInfo} from '../../Services/UserInfo.js'
+//import {getuserInfo,getCurrentUserInfo} from '../../Services/UserInfo.js'
+
 //import { useDocument,useFirestore} from 'vuefire'
 //import { signInWithEmailAndPassword } from 'firebase/auth'
 
@@ -110,7 +111,8 @@ export default {
   },
   setup() {
     const userStore = userUserStore()
-    return { userStore }
+   
+    return { userStore}
   },
   methods: {
     async onSubmit(event) {
@@ -121,6 +123,7 @@ export default {
           const data = this.userStore.userInfo
           console.log('dddd',data.usertytpe)
           if(data.usertytpe=='Patient'){
+           
             this.$router.push({ name: 'PateintView' });
           }
           if(data.usertytpe=='Admin'){

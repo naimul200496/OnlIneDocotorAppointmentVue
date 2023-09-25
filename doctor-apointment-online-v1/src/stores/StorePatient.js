@@ -17,7 +17,15 @@ export const useStoreAppointment = defineStore('Appointment', {
   },
   actions: {
      async getAllAppointmentInfo(Info) {
-     this.appointmentInfo= getAllAppointmentList(Info.uid);
+     let data1= await getAllAppointmentList(Info.uid);
+     //console.log('data1',data1)
+     if(data1){
+     this.appointmentInfo=data1
+      return true;
+     }
+     else{
+      return false;
+     }
         
     },
    

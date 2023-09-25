@@ -12,8 +12,8 @@
 									<div class="success-cont">
 										<i class="fas fa-check"></i>
 										<h3>Appointment booked Successfully!</h3>
-										<p>Appointment booked with <strong>Dr. Darren Elder</strong><br> on <strong>12 Nov 2019 5:00PM to 6:00PM</strong></p>
-										<a href="#" class="btn btn-primary view-inv-btn">Dashboard</a>
+										<p>Appointment booked with <strong>Dr. {{this.checkoutInfo.docnname}}</strong><br> on <strong>{{this.checkoutInfo.Date }} {{this.checkoutInfo.timeSlot}}</strong></p>
+										<a href="#" class="btn btn-primary view-inv-btn" @click.prevent="gotoDashboard()">Dashboard</a>
 									</div>
 								</div>
 							</div>
@@ -26,3 +26,32 @@
 			</div>		
 			<!-- /Page Content -->
 </template>
+<script>
+import { useStoreCheckOut } from '../../stores/StoreCheckout.js'
+export default {
+	name:'BookingConfirmation',
+	data(){
+		return{
+			checkoutInfo:'',
+		}
+
+	},
+	setup(){
+		const checkoutStore = useStoreCheckOut()
+		return{
+			checkoutStore,
+		}
+
+	},
+	async mounted(){
+		this.checkoutInfo = await this.checkoutStore.getCheckOutInfo;
+		console.log('Confirmation',this.checkoutInfo)
+	},
+	methods:{
+		gotoDashboard(){
+			this.$router.push({ name: 'PatientDashboard'});
+
+		}
+	}
+}
+</script>

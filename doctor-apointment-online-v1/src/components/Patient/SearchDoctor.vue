@@ -20,7 +20,7 @@
             <div class="doc-info-left">
               <div class="doctor-img">
                 <a href="doctor-profile.html">
-                  <img src="/img/noimage.jpg" class="img-fluid" alt="User Image" />
+                  <img src="/img/doctor_default_image.jpg" class="img-fluid" alt="User Image" />
                 </a>
               </div>
               <div class="doc-info-cont">
@@ -37,8 +37,8 @@
                 </h5>
                 <p><i class="fas fa-map-marker-alt"></i> {{ doctor.country}}, {{ doctor.provience}}</p>
                 <div class="clinic-booking">
-                  <a class="view-pro-btn" href="doctor-profile.html">View Profile</a>
-                  <RouterLink class="apt-btn" :to="{ name:'BookingDetailView', params: { docid: doctor.id}}"></RouterLink>
+                  <a class="view-pro-btn" href="#">View Profile</a>
+                  <RouterLink class="apt-btn" :to="{ name:'BookingDetailView', params: { docid: doctor.id}}">Booking</RouterLink>
                 <!--   <a class="apt-btn" href="#" @click="goBookAppointment(`${doctor.id}`)">Book Appointment</a> -->
                <!--  <a><RouterLink :to="{ name:'BookingPageDetail', params: { docid: doctor.id}}">Book Appointment</RouterLink></a> -->
                

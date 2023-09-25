@@ -159,8 +159,8 @@
             <div class="card-body">
               <!-- Booking Doctor Info -->
               <div class="booking-doc-info">
-                <a href="doctor-profile.html" class="booking-doc-img">
-                  <img src="assets/img/doctors/doctor-thumb-02.jpg" alt="User Image" />
+                <a href="#" class="booking-doc-img">
+                  <img src="/img/doctor_default_image.jpg" alt="User Image" />
                 </a>
                 <div class="booking-info">
                   <h4>
@@ -282,15 +282,18 @@ export default {
   data() {
     return {
       OpenClose: this.visible,
-	  appointmentinfo:null,
+	    appointmentinfo:null,
       checkoutInfo: null,
       userInfo: null,
+      familyInfo:null,
       totalAmt: 0,
       bookingFee: 15,
       docnname: '',
       doclocation: '',
+      docimageUrl:'',
       Date1: '',
       timeSlot: '',
+      selectedItemID:'',
       docpricing: ''
     }
   },
@@ -305,14 +308,16 @@ export default {
   },
   async mounted() {
     this.checkoutInfo = await this.checkoutStore.getCheckOutInfo
+    console.log('CheckoutInfo', this.checkoutInfo)
     this.userInfo = this.userstoreInfo.userInfo
     ;(this.docnname = this.checkoutInfo.docnname),
       (this.doclocation = this.checkoutInfo.doclocation),
       (this.Date1 = this.checkoutInfo.Date),
       (this.timeSlot = this.checkoutInfo.timeSlot),
+      (this.selectedItemID = this.checkoutInfo.selectedItemID),
       (this.docpricing = this.checkoutInfo.docpricing),
       (this.totalAmt = parseFloat(this.checkoutInfo.docpricing) + parseFloat(this.bookingFee))
-    console.log('CheckoutInfo', this.checkoutInfo)
+   
     console.log('UserInfo', this.userInfo)
   },
   methods: {
@@ -321,17 +326,27 @@ export default {
     },
     async confirm_yes() {
       // const doctId={iid:this.doctorId}
+      const dta= new Date();
+     const test = `${dta.getFullYear()}-${dta.getMonth()}-${dta.getDate()} ${dta.getHours()}:${dta.getMinutes()}:${dta.getSeconds()}`
+     console.log('date',test) 
+     this.familyInfo= await this.checkoutStore.getFamilyInfo
 	  console.log('CheckoutInfi',this.checkoutInfo)
 	  console.log('userInfo',this.userInfo)
 	  this.appointmentinfo={
 		document_id:`${this.checkoutInfo.docid}_${this.checkoutInfo.Date}_${this.checkoutInfo.timeSlot}`,
-		bookingDate:'',
+		bookingDate:test,
 		appointmentDate:this.Date1,
 		appointmentTime:this.timeSlot,
-		payment:'Paid',
+    selectedItemID:this.selectedItemID,
+		payment:'pending',
 		totalAmount:this.totalAmt,
 		patientId:this.userInfo.uid,
-    doctorId:this.checkoutInfo.docid
+    familyInfo:this.familyInfo,
+    doctorId:this.checkoutInfo.docid,
+    docnname : this.checkoutInfo.docnname,
+    doclocation:this.doclocation,
+    docimageUrl:this.checkoutInfo.docimageUrl,
+    dociSpecilaity:this.checkoutInfo.specialization,
 
 	  }
 	  await AddAppointmentInfo(this.appointmentinfo)

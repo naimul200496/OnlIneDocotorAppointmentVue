@@ -125,8 +125,9 @@ const router = createRouter({
      children:[
         { path:'/PateintView/SearchDoctor',name:'SearchDoctor',component:SearchDoctor,props: true,},
         { path:'/PateintView/BookingPage',name:'BookingPage',component:BookingPage, props: true,},
+        { path:'/PateintView/PatientDashboard',name:'PatientDashboard',component:PatientDashboard,props: true,},
         {path: '/BookingDetail/:docid/booking', name: 'BookingDetailView', component: BookingDetailView,props: true},
-        { path:'/PateintView/PatientDashboard',name:'PatientDashboard',component:PatientDashboard, props: true,},
+       
         {
           path: '/PateintView/CheckOut',
           name: 'CheckOut',

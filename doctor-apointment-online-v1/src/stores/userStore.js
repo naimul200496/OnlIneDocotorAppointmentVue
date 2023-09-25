@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { registerUser, updateUserProfile, addUserData,loginUser,getUserData,signout } from '../Services/userFirebase'
+import { registerUser, updateUserProfile, addUserData,loginUser,getUserData,signout,} from '../Services/userFirebase'
 
 const userModel = {
   uid: '',
@@ -29,8 +29,9 @@ export const userUserStore = defineStore('user', {
       }
     },
     userInfo(){
+
         if(this.user) {
-            return this.user
+         return this.user
           }
           else {
             return null

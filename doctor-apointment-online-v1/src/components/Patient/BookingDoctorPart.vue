@@ -23,7 +23,8 @@
 </div>
 <div class="card">
     <div class="card-body">
-        <p><input type="checkbox" @click="checkedd()"> On behalf of me.</p>
+        <p><input type="checkbox" @click="checkedd()"> For Family member. 
+            <span v-if="checkValue" class="btn btn-primary btn-sm" @click.prevent="addFamilyI()">Add</span></p>
          <!-- Personal Information -->
         
            
@@ -31,13 +32,13 @@
               <div class="col-md-6 col-sm-12">
                 <div class="form-group card-label">
                   <label>Full Name <span class="text-danger">*</span></label>
-                  <input class="form-control" type="text" v-model.trim="fullname" required />
+                  <input class="form-control" type="text" v-model.trim="family_fullname" required />
                 </div>
               </div>
               <div class="col-md-6 col-sm-12">
                 <div class="form-group card-label">
                   <label>Phone<span class="text-danger">*</span></label>
-                  <input class="form-control" type="text" required />
+                  <input class="form-control" type="text" v-model.trim="family_phone" required />
                 </div>
               </div>
              
@@ -56,13 +57,15 @@
         name: 'BookingDoctorPart' getDoctor
 } */
     import { useStoreAddDoctor } from '../../stores/AddDoctorStore.js';
+    import { useStoreCheckOut } from '../../stores/StoreCheckout.js';
 
     export default {
         name: 'BookingDoctorPart',
         data(){
         return{
             checkValue:false,
-            fullname:'',
+            family_fullname:'',
+            family_phone:'',
         }
         },
        
@@ -85,12 +88,24 @@
         },
         setup() {
             const doctorStore = useStoreAddDoctor();
-            return { doctorStore };
+            const checkoutStore=useStoreCheckOut();
+            return { doctorStore, checkoutStore };
         },
-        methods:{
+         methods:{
             checkedd(){
                 this.checkValue=!this.checkValue
+                
+            },
+            addFamilyI(){
+                const famil= {
+                    family_fullname:this.family_fullname,
+                    family_phone:this.family_phone
+
+                }
+              this.checkoutStore.setFamilymember(famil)
+
             }
+
         }
     }
 </script>

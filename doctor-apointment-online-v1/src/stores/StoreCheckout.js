@@ -2,7 +2,8 @@ import { defineStore } from 'pinia'
 export const useStoreCheckOut = defineStore('ChekcOut', {
   state() {
     return {
-      checkoutinfo: null
+      checkoutinfo: null,
+      family_member:null,
     }
   },
   getters: {
@@ -12,6 +13,10 @@ export const useStoreCheckOut = defineStore('ChekcOut', {
       } else {
         return null
       }
+    },
+    
+    getFamilyInfo() {
+      return this.family_member;
     }
   },
   actions: {
@@ -19,6 +24,12 @@ export const useStoreCheckOut = defineStore('ChekcOut', {
       this.checkoutinfo=null
       this.checkoutinfo = checkoutInfo
      
-    }
+    },
+    // Set Famiy member.
+    setFamilymember(familyinfo){
+      
+      this.family_member=familyinfo
+      console.log('this.family_member',this.family_member)
+     },
   }
 })
