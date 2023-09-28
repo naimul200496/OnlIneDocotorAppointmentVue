@@ -21,6 +21,7 @@ import BookingDetailView from '../components/Patient/BookingDetail.vue'
 import CheckOut from '../components/Patient/CheckOut.vue'
 import BookingConfirmation from '../components/Patient/BookingConfirmation.vue'
 import PatientDashboard from '../components/Patient/PatientDashboard.vue'
+import DoctorProfile  from '../components/Patient/DoctorProfile.vue'
 
 
 const router = createRouter({
@@ -127,6 +128,7 @@ const router = createRouter({
         { path:'/PateintView/BookingPage',name:'BookingPage',component:BookingPage, props: true,},
         { path:'/PateintView/PatientDashboard',name:'PatientDashboard',component:PatientDashboard,props: true,},
         {path: '/BookingDetail/:docid/booking', name: 'BookingDetailView', component: BookingDetailView,props: true},
+        {path: '/DoctorProfile/:docid/Profile', name: 'DoctorProfile', component: DoctorProfile,props: true},
        
         {
           path: '/PateintView/CheckOut',

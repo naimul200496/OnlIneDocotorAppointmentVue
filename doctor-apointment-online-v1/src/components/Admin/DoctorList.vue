@@ -36,7 +36,7 @@
                             <td>
                                 <h2 class="table-avatar">
                                     <a href="#" class="avatar avatar-sm mr-2">
-                                        <img class="avatar-img rounded-circle" src="/img/doctors/doctor-01.jpg" alt="User Image">
+                                        <img class="avatar-img rounded-circle" src="/img/doctor_default_image.jpg" alt="User Image">
                                     </a>
                                     <a href="#">Dr. {{ doctor.docFirstName }} {{ doctor.docLastName  }} <span>{{doctor.specialization}}</span></a>
                                 </h2>

@@ -12,6 +12,7 @@
                             <th>Appt Date</th>
                             <th>Booking Date</th>
                             <th>Amount</th>
+                            <th>Payment</th>
                             <th>Follow Up</th>
                             <th>Status</th>
                         </tr>
@@ -31,9 +32,16 @@
                            
                             <td>{{appointment.appointmentDate }} <span class="d-block text-info">{{appointment.appointmentTime}}</span></td>
                             <td>{{appointment.bookingDate}}</td>
-                            <td>{{appointment.totalAmount}}</td>
+                            <td>${{appointment.totalAmount}}</td>
+                            <td><span class="badge badge-pill bg-success-light">{{appointment.payment}}</span></td>
                             <td>{{appointment.followupdate}}</td>
-                            <td><span class="badge badge-pill bg-success-light">Confirm</span></td>
+                            <td v-if="appointment.appointmentStatus">
+                                <span class="badge badge-pill bg-success-light">Confirm</span>
+                            </td>
+                            
+                            <td v-else>
+                                <span class="bbadge badge-pill bg-warning-light">Pending</span>
+                            </td>
                          </tr>
                     </tbody>
                 </table>

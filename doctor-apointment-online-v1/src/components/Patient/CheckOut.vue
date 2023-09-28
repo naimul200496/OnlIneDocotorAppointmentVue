@@ -338,7 +338,7 @@ export default {
 		appointmentDate:this.Date1,
 		appointmentTime:this.timeSlot,
     selectedItemID:this.selectedItemID,
-		payment:'pending',
+		payment:'Confirm',
 		totalAmount:this.totalAmt,
 		patientId:this.userInfo.uid,
     familyInfo:this.familyInfo,
@@ -347,6 +347,7 @@ export default {
     doclocation:this.doclocation,
     docimageUrl:this.checkoutInfo.docimageUrl,
     dociSpecilaity:this.checkoutInfo.specialization,
+    appointmentStatus:false,
 
 	  }
 	  await AddAppointmentInfo(this.appointmentinfo)

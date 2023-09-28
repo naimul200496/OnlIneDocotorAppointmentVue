@@ -108,16 +108,48 @@ export async function signout() {
     })
 }
 
-export function getDoctorListFromFireStore() {
+export async function getDoctorListFromFireStore() {
   const db = useFirestore()
-  const todos = useCollection(collection(db, 'doctorList'))
+  const alldoctor=[]
+  const querySnapshot = await getDocs(collection(db, "doctorList"));
+  querySnapshot.forEach((doc) => {
+    //let doctInfo=  getFireDoctorData(doc.data().doctorId)
+    console.log('doc.country',doc.data().country)
+    alldoctor.push({
+      address: doc.data().address,
+      city: doc.data().city,
+      country: doc.data().country,
+      displayname: doc.data().displayname, 
+      docBiography: doc.data().docBiography, 
+      docDob: doc.data().docDob, 
+      docEmail: doc.data().docEmail, 
+      docFirstName: doc.data().docFirstName,
+      docGender: doc.data().docGender,
+      docLastName: doc.data().docLastName,
+      docPassword: doc.data().docPassword,
+      docPhone: doc.data().docPhone,
+      education: doc.data().education, 
+      id: doc.data().id, 
+      imageUrl: doc.data().imageUrl,
+      isactive: doc.data().isactive, 
+      postalCode: doc.data().postalCode,
+      pricing: doc.data().pricing, 
+      provience: doc.data().provience,
+      specialization: doc.data().specialization,     
+    })
+  })
+  console.log('alldoctor',alldoctor)
+  return alldoctor
+ /*  const todos = useCollection(collection(db, 'doctorList'))
   console.log('todos', todos.id)
-  return todos
+  return todos */
   /* const querySnapshot = await getDocs(collection(db, "cities", "SF", "landmarks"));
     querySnapshot.forEach((doc) => {
     // doc.data() is never undefined for query doc snapshots
     console.log(doc.id, " => ", doc.data());
-}); */
+}); 
+
+ */
 }
 
 // Delete Docotr
@@ -133,18 +165,6 @@ export async function deleteFireUser(doctid) {
     //await deleteDoc(docSnap);
     await deleteDoc(doc(db, 'doctorList', doctid))
   }
-
-  /* const userSnap = docSnap.data();
-    console.log('userRef',userSnap) */
-
-  /*  const db = useFirestore();
-    const userRef =  doc(db,'doctorList', user.id);
-    console.log('userRef',userRef)
-    const userSnap = await getDoc(userRef); */
-
-  /*  if(userSnap.exists()) {
-        await deleteDoc(userRef);
-    } */
 }
 
 export async function AddAppointmentInfo(appointmentInfo) {
@@ -189,10 +209,11 @@ export async function getAllAppointmentList(patientId) {
       bookingDate: doc.data().bookingDate,
       totalAmount: doc.data().totalAmount,
       followupdate: '--',
-      status: 'Pending',
+      payment: doc.data().payment,
       familyInfo: doc.data().familyInfo,
       dociSpecilaity: doc.data().dociSpecilaity,
-      selectedItemID:doc.data().selectedItemID
+      selectedItemID:doc.data().selectedItemID,
+      appointmentStatus:doc.data().appointmentStatus
     })
   })
 
@@ -215,3 +236,69 @@ export async function getAllAppointmentList(patientId) {
 })()
 }) */
 }
+
+export async function getAllPatient(){
+    const allPateint=[]
+    const db = useFirestore()
+   
+    const q = query(collection(db, 'users'), where('usertytpe', '==', 'Patient'))
+    const querySnapshot = await getDocs(q)
+    querySnapshot.forEach((doc)=>{
+        allPateint.push({
+            patientName:`${doc.data().firstname} ${doc.data().lastname}`,
+            uid:`${doc.data().uid}`
+        })
+    })
+    return allPateint
+}
+
+export async function getAllAppointmentAdminDasboard() {
+    let allAppointmentList = []
+    const db = useFirestore()
+   
+    const querySnapshot = await getDocs(collection(db, "appointmentList"));
+    querySnapshot.forEach((doc) => {
+     //let doctInfo=  getFireDoctorData(doc.data().doctorId)
+     allAppointmentList.push({
+      id:doc.data().document_id,
+       doctorname: doc.data().docnname,
+        docimageUrl: doc.data().imageUrl,
+        specialization: doc.data().specialization,
+        appointmentDate: doc.data().appointmentDate,
+        appointmentTime: doc.data().appointmentTime,
+        bookingDate: doc.data().bookingDate,
+        totalAmount: doc.data().totalAmount,
+        followupdate: '--',
+        status:doc.data().payment,
+        familyInfo: doc.data().familyInfo,
+        dociSpecilaity: doc.data().dociSpecilaity,
+        patientId:doc.data().patientId,
+        patientName:'',
+        patientPhone:'',
+        appointmentStatus:doc.data().appointmentStatus
+       
+      })
+});
+//console.log('Admin allAppointmentList:',allAppointmentList)
+return allAppointmentList
+   
+  }
+  export async function updateStatusFire(id,statusValue){
+    const db = useFirestore()
+   // const cityRef = db.collection('appointmentList').doc(id);
+
+    // Set the 'capital' field of the city
+   // const res = await cityRef.update({appointmentStatus: statusValue});
+/* 
+    const cityRef = doc(db, 'appointmentList', id);
+    setDoc(cityRef, { appointmentStatus: statusValue }, { merge: true }); */
+
+/////
+const washingtonRef = doc(db, "appointmentList", id);
+
+// Set the "capital" field of the city 'DC'
+await updateDoc(washingtonRef, {
+        appointmentStatus: statusValue
+});
+    
+  }

@@ -124,7 +124,7 @@ export default {
           console.log('dddd',data.usertytpe)
           if(data.usertytpe=='Patient'){
            
-            this.$router.push({ name: 'PateintView' });
+            this.$router.push({ name: 'PatientDashboard' });
           }
           if(data.usertytpe=='Admin'){
             this.$router.push({ name: 'DashBoard' });

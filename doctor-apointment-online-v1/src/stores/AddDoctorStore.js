@@ -58,10 +58,11 @@ export const useStoreAddDoctor = defineStore('country', {
       }
     },
 
-    getAllDoctorList() {
-      console.log('111', this.doctorInfo)
-      this.doctorInfo = getDoctorListFromFireStore()
-      console.log('dcotorstore', this.doctorInfo)
+    async getAllDoctorList() {
+    
+      this.doctorInfo = await getDoctorListFromFireStore()
+      console.log('this.doctorInfo',this.doctorInfo)
+      
     },
     async DeleteDoctor(uuid) {
       console.log('uuuu', uuid)

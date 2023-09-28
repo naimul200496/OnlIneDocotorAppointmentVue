@@ -79,12 +79,21 @@
                       <ul class="clearfix">
                         <li v-for="(item1, index) in grp2" :key="index">
                           <a
+                            v-if="item1.timeSelected"
+                            :class="{ 'timing selected': item1.active, timing: !item1.active }"
+                            href="#"
+                            @click="toggleClass(index, item1.id)"
+                            style="text-decoration-line: line-through"
+                          >
+                            <span>{{ item1.value1 }}</span> <span>{{ item1.value2 }} </span>
+                          </a>
+                          <a
+                            v-else
                             :class="{ 'timing selected': item1.active, timing: !item1.active }"
                             href="#"
                             @click="toggleClass(index, item1.id)"
                           >
-                            <span>{{ item1.value1 }}</span> <span>{{ item1.value2 }}</span
-                            ><span v-if="item1.timeSelected" style="color: red">NA</span>
+                            <span>{{ item1.value1 }}</span> <span>{{ item1.value2 }} </span>
                           </a>
                         </li>
                       </ul>
@@ -93,12 +102,21 @@
                       <ul class="clearfix">
                         <li v-for="(item1, index) in grp3" :key="index">
                           <a
+                            v-if="item1.timeSelected"
+                            :class="{ 'timing selected': item1.active, timing: !item1.active }"
+                            href="#"
+                            @click="toggleClass(index, item1.id)"
+                            style="text-decoration-line: line-through"
+                          >
+                            <span>{{ item1.value1 }}</span> <span>{{ item1.value2 }} </span>
+                          </a>
+                          <a
+                            v-else
                             :class="{ 'timing selected': item1.active, timing: !item1.active }"
                             href="#"
                             @click="toggleClass(index, item1.id)"
                           >
-                            <span>{{ item1.value1 }}</span> <span>{{ item1.value2 }}</span
-                            ><span v-if="item1.timeSelected" style="color: red">NA</span>
+                            <span>{{ item1.value1 }}</span> <span>{{ item1.value2 }} </span>
                           </a>
                         </li>
                       </ul>
@@ -108,12 +126,21 @@
                       <ul class="clearfix">
                         <li v-for="(item1, index) in grp4" :key="index">
                           <a
+                            v-if="item1.timeSelected"
+                            :class="{ 'timing selected': item1.active, timing: !item1.active }"
+                            href="#"
+                            @click="toggleClass(index, item1.id)"
+                            style="text-decoration-line: line-through"
+                          >
+                            <span>{{ item1.value1 }}</span> <span>{{ item1.value2 }} </span>
+                          </a>
+                          <a
+                            v-else
                             :class="{ 'timing selected': item1.active, timing: !item1.active }"
                             href="#"
                             @click="toggleClass(index, item1.id)"
                           >
-                            <span>{{ item1.value1 }}</span> <span>{{ item1.value2 }}</span
-                            ><span v-if="item1.timeSelected" style="color: red">NA</span>
+                            <span>{{ item1.value1 }}</span> <span>{{ item1.value2 }} </span>
                           </a>
                         </li>
                       </ul>
@@ -179,7 +206,7 @@ export default {
       selectedItem: [],
       datePicker: new Date(),
       items: [
-        { id: 1, day: '1', value1: '9:00', value2: 'AM', timeSelected: true },
+        { id: 1, day: '1', value1: '9:00', value2: 'AM', timeSelected: false },
         { id: 2, day: '2', value1: '9:00', value2: 'AM', timeSelected: false },
         { id: 3, day: '3', value1: '9:00', value2: 'AM', timeSelected: false },
         { id: 4, day: '4', value1: '9:00', value2: 'AM', timeSelected: false },
@@ -234,23 +261,25 @@ export default {
       }
     },
     getdoctTimeSlotInf() {
-        const itemTemp=this.doctimeslotInfo
-        const weekData= this.getWeek
-        console.log('itemTemp',itemTemp)
-        itemTemp.forEach((tempdata)=>{
-            weekData.forEach((tempweek)=>{
-                console.log('tempdata.data().appointmentDate',tempdata.appointmentDate)
-                if(tempdata.appointmentDate == tempweek.Date){
-                    for (let object of this.items) {
-                        if (object.id === tempdata.selectedItemID) {
-                            object.timeSelected = true;
-                        }
-                   }
-                }
-            })
+      const itemTemp = this.doctimeslotInfo
+      const weekData = this.getWeek
+      console.log('itemTemp', itemTemp)
 
+      for (let object of this.items) {
+        object.timeSelected = false
+      }
+      itemTemp.forEach((tempdata) => {
+        weekData.forEach((tempweek) => {
+          console.log('tempdata.data().appointmentDate', tempdata.appointmentDate)
+          if (tempdata.appointmentDate == tempweek.Date) {
+            for (let object of this.items) {
+              if (object.id === tempdata.selectedItemID) {
+                object.timeSelected = true
+              }
+            }
+          }
         })
-
+      })
     },
     CheckOut() {
       const test = this.selectedItem
@@ -258,7 +287,7 @@ export default {
       console.log('Selected Itemtest', this.bookingInfo)
       const searchName = parseInt(test.day)
       const timeSlotValue = `${test.value1}${test.value2}`
-     const selectedItemID= test.id
+      const selectedItemID = test.id
       console.log('searchName', searchName)
 
       /* const node = Object.values(this.getWeek).forEach((node) => {

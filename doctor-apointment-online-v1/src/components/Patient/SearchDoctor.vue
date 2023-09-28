@@ -37,7 +37,8 @@
                 </h5>
                 <p><i class="fas fa-map-marker-alt"></i> {{ doctor.country}}, {{ doctor.provience}}</p>
                 <div class="clinic-booking">
-                  <a class="view-pro-btn" href="#">View Profile</a>
+                  <!-- <a class="view-pro-btn" href="#">View Profile</a> -->
+                  <RouterLink class="view-pro-btn" :to="{ name:'DoctorProfile', params: { docid: doctor.id}}">Profile</RouterLink>
                   <RouterLink class="apt-btn" :to="{ name:'BookingDetailView', params: { docid: doctor.id}}">Booking</RouterLink>
                 <!--   <a class="apt-btn" href="#" @click="goBookAppointment(`${doctor.id}`)">Book Appointment</a> -->
                <!--  <a><RouterLink :to="{ name:'BookingPageDetail', params: { docid: doctor.id}}">Book Appointment</RouterLink></a> -->
@@ -87,7 +88,7 @@ export default {
 
 data(){
     return{
-        doctorList:null,
+        doctorList:[],
     }
 }
 ,
@@ -97,8 +98,8 @@ data(){
   },
    async mounted() {
     await this.docotorInfo.getAllDoctorList()
-   this.doctorList = await this.docotorInfo.getAllDoctorInfo
-   console.log('sssssss',this.doctorList)
+   this.doctorList = this.docotorInfo.getAllDoctorInfo
+  
   },
   methods:{
     goBookAppointment(id){
