@@ -1,4 +1,5 @@
 <template>
+
     <div style="margin-left: 250px;margin-top: 100px;">
         <nav class="user-tabs mb-4">
             <ul class="nav nav-tabs nav-tabs-bottom nav-justified">
@@ -16,6 +17,10 @@
                 </li>
             </ul>
         </nav>
+        <div v-if="loadingImage">
+        <center>  <img src="/img/loadingImage.gif"></center>
+        </div>
+        <div></div>
         <div class="card card-table mb-0">
         <div class="card-body">
             <div class="table-responsive">
@@ -112,7 +117,8 @@ export default {
              file:'',
              doctorList:null,
              doctorId:'',
-             filterdataForEdit:''
+             filterdataForEdit:'',
+            loadingImage:false,
         }
     },
     props:{
@@ -162,15 +168,15 @@ closeFunction(){this.OpenClose=!this.OpenClose;}
     }
    },
    setup(){
+    
     const docotorInfo= useStoreAddDoctor();
     return  { docotorInfo };
    },
-  mounted(){
-
-    // Directly from firestor
-   // this.doctorList= await getDoctorListFromFireStore()
-   this.docotorInfo.getAllDoctorList()
+ async mounted(){
+    this.loadingImage=true
+   await this.docotorInfo.getAllDoctorList()
    this.doctorList =  this.docotorInfo.getAllDoctorInfo
+   this.loadingImage=false
    console.log('sssssss',this.doctorList)
 
    }

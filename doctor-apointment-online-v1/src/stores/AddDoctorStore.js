@@ -27,7 +27,11 @@ export const useStoreAddDoctor = defineStore('country', {
     },
     getAllDoctorInfo() {
       // this.doctorInfo= await getDoctorListFromFireStore()
-      return this.doctorInfo
+      if (this.doctorInfo) {
+        return this.doctorInfo
+      } else {
+        return null
+      }
     },
     getDoctor() {
       return this.currentDoctor
@@ -61,7 +65,7 @@ export const useStoreAddDoctor = defineStore('country', {
     async getAllDoctorList() {
     
       this.doctorInfo = await getDoctorListFromFireStore()
-      console.log('this.doctorInfo',this.doctorInfo)
+     // console.log('this.doctorInfo',this.doctorInfo)
       
     },
     async DeleteDoctor(uuid) {

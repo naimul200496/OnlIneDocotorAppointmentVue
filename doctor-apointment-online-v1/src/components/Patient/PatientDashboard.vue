@@ -96,22 +96,7 @@ export default {
         this.userInfo = await this.storeUser.userInfo
         await this.storeAppointInfo.getAllAppointmentInfo(this.userInfo)
        this.appointmentData = await this.storeAppointInfo.getAppointmentInfo
-      console.log('appointmentInfo', this.appointmentData)
-        /* console.log('appointmentInfo', this.userInfo)
-
-            this.id=this.appointmentInfo.id,
-            this.doctorname=this.appointmentInfo.doctorname,
-            this.doctorPhot=this.appointmentInfo.doctorPhot,
-            this.specialization=this.appointmentInfo.specialization,
-            this.appointmentDate=this.appointmentInfo.appointmentDate,
-            this.appointmentTime=this.appointmentInfo.appointmentTime,
-            this.bookingDate=this.appointmentInfo.bookingDate,
-            this.totalAmount=this.appointmentInfo.totalAmount,
-            this.followupdate=this.appointmentInfo.followupdate,
-            this.status=this.appointmentInfo.status,
-            console.log('End..') */
-
-    }
+      }
 
 }
 </script>

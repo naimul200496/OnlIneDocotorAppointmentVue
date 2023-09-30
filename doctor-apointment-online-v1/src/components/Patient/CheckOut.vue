@@ -327,7 +327,7 @@ export default {
     async confirm_yes() {
       // const doctId={iid:this.doctorId}
       const dta= new Date();
-     const test = `${dta.getFullYear()}-${dta.getMonth()}-${dta.getDate()} ${dta.getHours()}:${dta.getMinutes()}:${dta.getSeconds()}`
+     const test = `${dta.getFullYear()}-${dta.getMonth()+1}-${dta.getDate()} ${dta.getHours()}:${dta.getMinutes()}:${dta.getSeconds()}`
      console.log('date',test) 
      this.familyInfo= await this.checkoutStore.getFamilyInfo
 	  console.log('CheckoutInfi',this.checkoutInfo)

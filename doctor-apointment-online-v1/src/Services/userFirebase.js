@@ -15,7 +15,7 @@ import {
   deleteDoc,
   getDocs,
   where,
-  query
+  query,getCountFromServer,orderBy,
 } from 'firebase/firestore'
 import { useFirestore, useFirebaseAuth, useCollection, useDocument } from 'vuefire'
 
@@ -114,7 +114,7 @@ export async function getDoctorListFromFireStore() {
   const querySnapshot = await getDocs(collection(db, "doctorList"));
   querySnapshot.forEach((doc) => {
     //let doctInfo=  getFireDoctorData(doc.data().doctorId)
-    console.log('doc.country',doc.data().country)
+    //console.log('doc.country',doc.data().country)
     alldoctor.push({
       address: doc.data().address,
       city: doc.data().city,
@@ -138,7 +138,7 @@ export async function getDoctorListFromFireStore() {
       specialization: doc.data().specialization,     
     })
   })
-  console.log('alldoctor',alldoctor)
+  //console.log('alldoctor',alldoctor)
   return alldoctor
  /*  const todos = useCollection(collection(db, 'doctorList'))
   console.log('todos', todos.id)
@@ -216,6 +216,8 @@ export async function getAllAppointmentList(patientId) {
       appointmentStatus:doc.data().appointmentStatus
     })
   })
+  allAppointmentdata.sort((a, b) => new Date(b.bookingDate) - new Date(a.bookingDate));
+  //console.log("descending", homes);
 
   return allAppointmentdata
 
@@ -301,4 +303,38 @@ await updateDoc(washingtonRef, {
         appointmentStatus: statusValue
 });
     
+  }
+
+  // For Admin Dashboard
+  export async function countqueryForAdminDasboard(){
+    const db = useFirestore()
+    let allCountAdminData=null
+    const countAllApointmentColl = collection(db, "appointmentList");
+    const countAllApointmentData = await getCountFromServer(countAllApointmentColl);
+
+    const countAllDoctorColl = collection(db, "doctorList");
+    const countAllDoctorData = await getCountFromServer(countAllDoctorColl);
+
+  /*   const countAllPatientColl = collection(db, "users");
+    const countAllPatientData = await getCountFromServer(countAllPatientColl); */
+
+    const coll = collection(db, "users");
+    const countAllPatientColl = query(coll, where("usertytpe", "==", "Patient"));
+    const countAllPatientData = await getCountFromServer(countAllPatientColl);
+
+
+    const querySnapshot = await getDocs(collection(db, "appointmentList"));
+    let totalAmt=0.00
+    querySnapshot.forEach((doc)=>
+    totalAmt=totalAmt+ parseFloat(doc.data().totalAmount)
+    )
+
+    allCountAdminData={
+      allApointment:countAllApointmentData.data().count,
+      totalDoctor:countAllDoctorData.data().count,
+      totalPatient:countAllPatientData.data().count,
+      totalAmt:totalAmt,
+    }
+    console.log('count: ', allCountAdminData);
+    return allCountAdminData
   }

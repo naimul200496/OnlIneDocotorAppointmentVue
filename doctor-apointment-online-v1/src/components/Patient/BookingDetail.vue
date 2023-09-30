@@ -310,7 +310,7 @@ export default {
         specialization: this.docinfo.specialization
       }
       // const r= {timeSlot,...node}
-      console.log('node', timeSlot)
+      //console.log('node', timeSlot)
       this.checkoutStore.storeCheckOutInfo(timeSlot)
       this.$router.push({ name: 'CheckOut' })
     },

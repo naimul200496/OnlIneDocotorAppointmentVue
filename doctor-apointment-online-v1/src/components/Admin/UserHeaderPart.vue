@@ -50,7 +50,7 @@
                       <img
                         class="avatar-img rounded-circle"
                         alt="User Image"
-                        src="assets/img/doctors/doctor-thumb-01.jpg"
+                        src="/img/user_defualt_pic.png"
                       />
                     </span>
                     <div class="media-body">
@@ -138,7 +138,7 @@
           <span class="user-img"
             ><img
               class="rounded-circle"
-              :src=getUserInfo.photoURL
+              src="/img/user_defualt_pic.png"
               width="31"
               :alt=getUserInfo.lastname
           /></span>
@@ -147,7 +147,7 @@
           <div class="user-header">
             <div class="avatar avatar-sm">
               <img
-                src="../../public/img/profiles/avatar-01.jpg"
+                src="/img/user_defualt_pic.png"
                 alt="User Image"
                 class="avatar-img rounded-circle"
               />
