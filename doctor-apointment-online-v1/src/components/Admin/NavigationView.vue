@@ -29,7 +29,7 @@
              <RouterLink :to="{ name: 'DoctorList' }"><i class="fe fe-user-plus"></i>
                <span>Doctors</span></RouterLink>
             </li>
-            <li>
+            <!-- <li>
               <a href="#"><i class="fe fe-user"></i> <span>Patients</span></a>
             </li>
             <li>
@@ -80,7 +80,7 @@
             </li>
             <li>
               <a href="blank-page.html"><i class="fe fe-file"></i> <span>Blank Page</span></a>
-            </li>
+            </li> -->
          
           </ul>
         </div>

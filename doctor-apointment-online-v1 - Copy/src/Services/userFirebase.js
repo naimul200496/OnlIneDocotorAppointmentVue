@@ -41,43 +41,6 @@ export async function updateUserProfile(displayName, photoURL) {
   return true
 }
 
-// Doctor Dashboard
-
-export async function getdoctWiseApptInformation(uid){
-  const db = useFirestore()
-  let info=[] 
-  const coll = collection(db, "appointmentList");
-  const countAllAppointmentColl = query(coll, where("doctorId", "==", uid));
-  const querySnapshot = await getDocs(countAllAppointmentColl)
-  //const countAllPatientData = await getCountFromServer(countAllAppointmentColl);
- //const allPatient=countAllPatientData.data().count
- querySnapshot.forEach((doc)=>{
- info.push({
-    appointmentDate:doc.data().appointmentDate,
-    appointmentTime:doc.data().appointmentTime,
-    bookingDate:doc.data().bookingDate,
-    familyInfo:doc.data().familyInfo,
-    patientId:doc.data().patientId,
-   })
- })
- return info
-
-/*   const countAllPatientColl = collection(db, "users");
-  const countAllPatientData = await getCountFromServer(countAllPatientColl); */
-
- 
-}
-export async function getPateientName(id){
-  const db = useFirestore()
-  let pateintName=null
-  const q = query(collection(db, "users"), where("usertytpe", "==", 'Patient'), where("uid", "==", id));
-  const querySnapshot = await getDocs(q);
-  querySnapshot.forEach((doc) => {
-   pateintName=`${doc.data().firstname} ${doc.data().lastname}` 
-});
-return pateintName
-}
-
 export async function registerDoctorProfile(doctorinfo) {
   const auth = useFirebaseAuth()
   let uid = ''

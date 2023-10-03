@@ -154,7 +154,7 @@
             </div>
             <div class="user-text">
               <h6>{{ getUserInfo.firstname }} {{ getUserInfo.lastname }} </h6>
-              <p class="text-muted mb-0">Administrator</p>
+              <p class="text-muted mb-0">{{getUserInfo.usertytpe}}</p>
             </div>
           </div>
           <a class="dropdown-item" href="#profile">My Profile</a>

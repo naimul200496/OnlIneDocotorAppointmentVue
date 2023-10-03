@@ -26,7 +26,7 @@
               
             </li>
             <li>
-             <RouterLink :to="{ name: 'AddDoctor' }"><i class="fe fe-user-plus"></i>
+             <RouterLink :to="{ name: 'DoctorList' }"><i class="fe fe-user-plus"></i>
                <span>Doctors</span></RouterLink>
             </li>
             <li>

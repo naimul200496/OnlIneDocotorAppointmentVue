@@ -2,6 +2,7 @@
 <template>
 <HomeHeader></HomeHeader>
 <LogInForm ></LogInForm>
+<br><br><br>
 <Footer></Footer>    
 </template>
 <script>

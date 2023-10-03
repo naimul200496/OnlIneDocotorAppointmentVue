@@ -23,6 +23,10 @@ import BookingConfirmation from '../components/Patient/BookingConfirmation.vue'
 import PatientDashboard from '../components/Patient/PatientDashboard.vue'
 import DoctorProfile  from '../components/Patient/DoctorProfile.vue'
 
+import DoctorView from '../views/DoctorView.vue'
+import DoctorDashBoard from '../components/Doctor/DashBoardDoctor.vue'
+import DoctAppointment from '../components/Doctor/DoctAppointment.vue'
+
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -103,20 +107,7 @@ const router = createRouter({
       ]
     },
     // Pateint Page
-/* {
-  path: '/Patient/BookingDetailView/:docid/booking',
-  name: 'BookingDetailView',
-  component: BookingDetailView,
-  props: true,
-  meta: {
-    auth: true,
-   
-  }
-
-}, */
-
-
-    {
+{
       path: '/PateintView',
       name: 'PateintView',
       component: PateintView,
@@ -145,13 +136,18 @@ const router = createRouter({
        
       ],
     },
-    /* {
-      path: '/BookingPageDetail/:docid/detail',
-      name: 'BookingPageDetail',
-      component: BookingPage,
-      props: true,
-      
-    }, */
+    {
+    path: '/DoctorView',
+    name: 'DoctorView',
+    component: DoctorView,
+    meta: {
+      auth: true,
+    }, 
+     children:[
+    { path: '/Doctor/DoctorDashBoard',name: 'DoctorDashBoard',component: DoctorDashBoard,},
+    { path: '/Doctor/DoctAppointment',name: 'DoctAppointment',component: DoctAppointment,},
+    ]
+  },
     {
       path: '/:catchAll(.*)',
       name: 'NotFound',

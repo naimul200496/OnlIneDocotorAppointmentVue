@@ -2,8 +2,6 @@
 import { initializeApp } from "firebase/app";
 
 
-//import { getAnalytics } from "firebase/analytics";
-
 const firebaseConfig = {
   apiKey:import.meta.env.VITE_FIREBASE_API_KEY, 
   authDomain:import.meta.env.VITE_FIREBASE_AUTH_DOMAIN ,
@@ -25,11 +23,3 @@ apiKey : "AIzaSyBdYg4piDmDKLucuc-fCsJ-isVcoLaaWnM",
 
 // Initialize Firebase
 export const firebaseApp = initializeApp(firebaseConfig);
-
-
-
-/* const timestamp= firebaseApp.firestore();
-export {timestamp};
-export default  firebaseApp.firestore; */
-
-//const analytics = getAnalytics(app);

@@ -50,7 +50,7 @@
                       <img
                         class="avatar-img rounded-circle"
                         alt="User Image"
-                        src="assets/img/doctors/doctor-thumb-01.jpg"
+                        src="/img/user_defualt_pic.png"
                       />
                     </span>
                     <div class="media-body">
@@ -138,22 +138,22 @@
           <span class="user-img"
             ><img
               class="rounded-circle"
-              :src=getUserInfo.ImageUrl
+              src="/img/user_defualt_pic.png"
               width="31"
-              :alt=getUserInfo.LastName
+              :alt=getUserInfo.lastname
           /></span>
         </a>
         <div class="dropdown-menu">
           <div class="user-header">
             <div class="avatar avatar-sm">
               <img
-                src="../../public/img/profiles/avatar-01.jpg"
+                src="/img/user_defualt_pic.png"
                 alt="User Image"
                 class="avatar-img rounded-circle"
               />
             </div>
             <div class="user-text">
-              <h6>{{ getUserInfo.FirstName }} {{ getUserInfo.LastName }} </h6>
+              <h6>{{ getUserInfo.firstname }} {{ getUserInfo.lastname }} </h6>
               <p class="text-muted mb-0">Administrator</p>
             </div>
           </div>
@@ -169,7 +169,7 @@
   <!-- /Header -->
 </template>
 <script>
-import { userUserStore } from '../../stores/StoreFile.js'
+import { userUserStore } from '../../stores/userStore'
 
 export default {
   name: 'UserHeaderPart',
@@ -180,9 +180,7 @@ export default {
   },
   computed:{
     getUserInfo(){
-      //console.log('User',this.userStore.userInfo())
-     //var u= this.userStore.userInfo()
-     //console.log(u)
+     
       return  this.userStore.userInfo
       }
 },

@@ -76,8 +76,10 @@
   <!-- /Page Content -->
 </template>
 <script>
+import { userUserStore } from '../../stores/userStore'
 import { RouterLink } from 'vue-router'
-import {getuserInfo,getCurrentUserInfo} from '../../Services/UserInfo.js'
+//import {getuserInfo,getCurrentUserInfo} from '../../Services/UserInfo.js'
+
 //import { useDocument,useFirestore} from 'vuefire'
 //import { signInWithEmailAndPassword } from 'firebase/auth'
 
@@ -85,7 +87,7 @@ import {getuserInfo,getCurrentUserInfo} from '../../Services/UserInfo.js'
 //import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'
 //import { doc, getDoc } from "firebase/firestore";
 //import ServicesApi from '../../Services/ConfigeFile.js'
-import { userUserStore } from '../../stores/StoreFile'
+//import { userUserStore } from '../../stores/StoreFile'
 
 
 
@@ -109,14 +111,32 @@ export default {
   },
   setup() {
     const userStore = userUserStore()
-    return { userStore }
+   
+    return { userStore}
   },
   methods: {
     async onSubmit(event) {
       if (!event.preventDefault()) {
+        const success= await this.userStore.login(this.form.loginemail,this.form.loginPasswd)
+        console.log('sucess',success)
+        if(success){
+          const data = this.userStore.userInfo
+          console.log('dddd',data.usertytpe)
+          if(data.usertytpe=='Patient'){
+           
+            this.$router.push({ name: 'PatientDashboard' });
+          }
+          if(data.usertytpe=='Admin'){
+            this.$router.push({ name: 'DashBoard' });
+          }
+
+
+           console.log(data)
+        }
+
        // console.log('getuserInfo',await getuserInfo(this.form.loginemail,this.form.loginPasswd))
        
-
+/* 
        if(getuserInfo(this.form.loginemail,this.form.loginPasswd)){
         //console.log('Connected')
           let getcurrentuser= await getCurrentUserInfo()
@@ -134,29 +154,9 @@ export default {
         }
         else{this.error= 'Something went wrong. Please try agian'}
      }
-     else{this.error= 'You are not authorized to access this application'} 
+     else{this.error= 'You are not authorized to access this application'}  */
         
-      /* ServicesApi.checkUserExist(this.form.loginemail,this.form.loginPasswd)
-		   .then((response)=>{
-			if(response.data.length>0)
-			{
-				this.userStore.loginuserdata(response.data)
-			//console.log('Datasa',response.data)
-			this.$router.push({ name: 'DashBoard' });
-			}
-			else{
-				this.error='Invalid UserName/Password!'
-			}
-			
-		  })
-		  .catch((error)=>{
-			console.log(error)
-		  }) */
-
-        //console.log(this.form.loginemail);
-        //alert('Loggin Successfully. ' + this.form.loginemail)
-
-        //this.$router.push({ name: 'DashBoard' });
+    
       }
     }
   }

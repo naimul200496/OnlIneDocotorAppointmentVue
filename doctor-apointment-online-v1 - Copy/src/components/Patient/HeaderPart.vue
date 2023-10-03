@@ -11,13 +11,13 @@
 							</span>
 						</a>
 						<a href="#" class="navbar-brand logo">
-							<img src="assets/img/logo.png" class="img-fluid" alt="Logo">
+							<img src="/img/logo.png" class="img-fluid" alt="Logo">
 						</a>
 					</div>
 					<div class="main-menu-wrapper">
 						<div class="menu-header">
 							<a href="#" class="menu-logo">
-								<img src="assets/img/logo.png" class="img-fluid" alt="Logo">
+								<img src="/img/user_defualt_pic.png" class="img-fluid" alt="Logo">
 							</a>
 							<a id="menu_close" class="menu-close" href="javascript:void(0);">
 								<i class="fas fa-times"></i>
@@ -25,19 +25,20 @@
 						</div>
 						<ul class="main-nav">
 							<li>
-								<a href="#">Dashboard</a>
+								<a href="#" @click="gotoDashboard()">Dashboard</a>
 							</li>
 								
 							<li class="has-submenu active">
-								<a href="#">Patients <i class="fa-chevron-down"></i></a>
+								<a >Patients <i class="fa-chevron-down"></i></a>
 								<ul class="submenu">
 									<li> <RouterLink :to="{ name: 'SearchDoctor' }"><a href="#">Search Doctor</a></RouterLink></li>
-									<li><a href="#">Doctor Profile</a></li>
-									<li><a href="#">Booking</a></li>
-									<li><a href="#">Checkout</a></li>
-									<li><a href="#">Booking Success</a></li>
-									<li class="active"><a href="#">Patient Dashboard</a></li>
-									<li><a href="#">Favourites</a></li>
+									<!-- <li><a href="#">Doctor Profile</a></li> -->
+									<li><a href="#"><RouterLink :to="{ name: 'BookingPage' }">Booking</RouterLink></a></li>
+									<!-- <li><a href="#">Checkout</a></li> -->
+									<!-- <li><a href="#">Booking Success</a></li> -->
+									<!-- <li><a href="#"><RouterLink :to="{ name: 'PatientDashboard' }">Patient Dashboard</RouterLink></a></li> -->
+									<li><a href="#" @click="gotoDashboard()">Dashboard</a></li>
+									<!-- <li> <RouterLink :to="{ name: 'PatientDashboard' }"><a href="#">Dashboard2</a></RouterLink></li> -->
 									<li><a href="#">Chat</a></li>
 									<li><a href="#">Profile Settings</a></li>
 									<li><a href="#">Change Password</a></li>
@@ -57,12 +58,13 @@
 							</div>
 						</li>
 						
-						<!-- User Menu -->
+						<!-- User Menu   :src=getUserInfo.ImageUrl -->
+						
 						<li class="nav-item dropdown has-arrow logged-item">
 							<a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
 								<span class="user-img">
 									<img class="rounded-circle"
-                                    :src=getUserInfo.ImageUrl
+                                   src="/img/user_defualt_pic.png"
                                     width="31"
                                     :alt=getUserInfo.LastName>
 								</span>
@@ -71,12 +73,12 @@
 								<div class="user-header">
 									<div class="avatar avatar-sm">
 										<img class="rounded-circle"
-                                        :src=getUserInfo.ImageUrl
+                                        src="/img/user_defualt_pic.png"
                                         width="31"
                                         :alt=getUserInfo.LastName>
 									</div>
 									<div class="user-text">
-										<h6>{{ getUserInfo.FirstName }} {{ getUserInfo.LastName }}</h6>
+										<h6>{{ getUserInfo.firstname }} {{ getUserInfo.LastName }}</h6>
 										<p class="text-muted mb-0">Patient</p>
 									</div>
 								</div>
@@ -109,7 +111,7 @@
 			<!-- /Breadcrumb -->
 </template>
 <script>
-import { userUserStore } from '../../stores/StoreFile.js'
+import { userUserStore } from '../../stores/userStore'
 import { RouterLink } from 'vue-router'
 export default {
   name: 'HeaderPart',
@@ -130,6 +132,10 @@ export default {
 },
 
   methods:{
+	gotoDashboard(){
+			this.$router.push({ name:'PatientDashboard' });
+
+		},
     onLogoutClicked(){
         this.userStore.logOutUser();
     }

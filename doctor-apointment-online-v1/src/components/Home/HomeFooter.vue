@@ -59,15 +59,15 @@
 									<div class="footer-contact-info">
 										<div class="footer-address">
 											<span><i class="fa-map-marker-alt"></i></span>
-											<p> 3556  Beech Street, San Francisco,<br> California, CA 94108 </p>
+											<p> Saskatoon,<br> Saskatchewan, CA </p>
 										</div>
 										<p>
 											<i class="fas fa-phone-alt"></i>
-											+1 315 369 5943
+											+x xxx xxx xxxx
 										</p>
 										<p class="mb-0">
 											<i class="fas fa-envelope"></i>
-											doccure@example.com
+											info@example.com
 										</p>
 									</div>
 								</div>

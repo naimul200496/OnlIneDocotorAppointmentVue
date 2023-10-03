@@ -15,8 +15,8 @@
                   <h3>Patient Register</h3>
                 </div>
                
-                <!-- Register Form -->
-                <form @submit="onSubmitReg">
+                <!-- Register Form  @submit="onSubmitReg" -->
+                <form @submit.prevent="onSubmitReg">
                   <div v-if="error" class="alert alert-danger" role="alert">
                     {{ error }}
                   </div>
@@ -99,12 +99,10 @@
   <!-- /Page Content -->
 </template>
 <script>
+
+//import {CreateUser} from '../../Services/UserInfo.js'
+import {userUserStore} from '../../stores/userStore';
 import { RouterLink } from 'vue-router'
-import {CreateUser} from '../../Services/UserInfo.js'
-//import ServicesApi from '../../Services/ConfigeFile.js'
-/* import { useFirebaseAuth,useFirestore} from 'vuefire'
-import { createUserWithEmailAndPassword} from 'firebase/auth'
-import { doc, setDoc } from "firebase/firestore"; */
 export default {
   name: 'SignUpForm',
   components: {
@@ -120,46 +118,33 @@ export default {
         RegPassword: null,
         RegRePassword: null
       },
-	  error_message:null,
-	  error_status:false,
+      error:null,
+	    error_status:false,
     }
   },
+ 
   methods: {
     async onSubmitReg(event) {
-      console.log('event', event)
+      
       if (!event.preventDefault()) {
 
-          var RegistrationInfo = {
-          FirstName: this.form.RegFirstName,
-          LastName: this.form.RegLastName,
-          Phone: this.form.RegPhone,
-          IsActive: true,
-        }
-         if(CreateUser(this.form.Regemail, this.form.RegPassword,RegistrationInfo)){
-          alert('User Created');
-          {this.$router.push({ name: 'LogIn' })} 
-         }
-         else{
-          console.log('Error')
-         }
-         
-
-     /*   await ServicesApi.AddUser(RegistrationInfo)
-          .then((response) => {
-			if (response.data==='Added Successfully' && response.status===200)
-           {this.$router.push({ name: 'LogIn' })} 
-            //console.log('Reg', response)
-          })
-          .catch((error) => {
-			this.error_status = true
-			this.error_message = `Error Message Name:${error.name} [Message:${error.message}]`
-			//console.log(this.error_message)
-           // console.log(error)
-          }) */
-		  
+        await this.userStore.resgister({
+          firstname: this.form.RegFirstName, 
+          lastname: this.form.RegLastName,
+          email: this.form.Regemail,
+          password: this.form.RegPassword,
+          isactive: true,
+          usertytpe:'Patient',
+        });
+       // {this.$router.push({ name: 'LogIn' })} 
+        this.$router.push({name: 'LogIn'});
       }
     }
-  }
+  },
+setup(){
+    const userStore= userUserStore();
+    return  { userStore };
+  },
  
 }
 </script>

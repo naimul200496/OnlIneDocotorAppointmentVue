@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import { userUserStore } from '../stores/StoreFile'
+import { userUserStore } from '../stores/userStore'
 
 import NotFound from '../views/NotFound.vue'
 import HomeView from '../views/HomeView.vue'
@@ -11,10 +11,17 @@ import AdminPage from '../views/AdminPage.vue'
 import DashBoard from '../components/Admin/DashBoard.vue'
 import AppointmentPage from '../components/Admin/AppointmentPage.vue'
 import SpecialityPage from '../components/Admin/SpecialityPage.vue'
+import DoctorList from '../components/Admin/DoctorList.vue'
 import AddDoctor from '../components/Admin/AddDoctor.vue'
 
 import PateintView from '../views/PatientView.vue'
 import SearchDoctor from '../components/Patient/SearchDoctor.vue'
+import BookingPage from '../components/Patient/BookingPage.vue'
+import BookingDetailView from '../components/Patient/BookingDetail.vue'
+import CheckOut from '../components/Patient/CheckOut.vue'
+import BookingConfirmation from '../components/Patient/BookingConfirmation.vue'
+import PatientDashboard from '../components/Patient/PatientDashboard.vue'
+import DoctorProfile  from '../components/Patient/DoctorProfile.vue'
 
 
 const router = createRouter({
@@ -80,6 +87,11 @@ const router = createRouter({
           name: 'SpecialityPage',
           component: SpecialityPage,
         },
+        {
+          path: '/AdminPage/DoctorList',
+          name: 'DoctorList',
+          component: DoctorList,
+        },
         
         {
           path: '/AdminPage/AddDoctor',
@@ -91,6 +103,19 @@ const router = createRouter({
       ]
     },
     // Pateint Page
+/* {
+  path: '/Patient/BookingDetailView/:docid/booking',
+  name: 'BookingDetailView',
+  component: BookingDetailView,
+  props: true,
+  meta: {
+    auth: true,
+   
+  }
+
+}, */
+
+
     {
       path: '/PateintView',
       name: 'PateintView',
@@ -98,11 +123,35 @@ const router = createRouter({
       meta: {
         auth: true,
       },
-      children:[
-        { path:'/PateintView/SearchDoctor',name:'SearchDoctor',component:SearchDoctor}
+     children:[
+        { path:'/PateintView/SearchDoctor',name:'SearchDoctor',component:SearchDoctor,props: true,},
+        { path:'/PateintView/BookingPage',name:'BookingPage',component:BookingPage, props: true,},
+        { path:'/PateintView/PatientDashboard',name:'PatientDashboard',component:PatientDashboard,props: true,},
+        {path: '/BookingDetail/:docid/booking', name: 'BookingDetailView', component: BookingDetailView,props: true},
+        {path: '/DoctorProfile/:docid/Profile', name: 'DoctorProfile', component: DoctorProfile,props: true},
+       
+        {
+          path: '/PateintView/CheckOut',
+          name: 'CheckOut',
+          component: CheckOut,
+          props: true,
+        },
+        {
+          path: '/PateintView/BookingConfirmation',
+          name: 'BookingConfirmation',
+          component: BookingConfirmation,
+          props: true,
+        },
        
       ],
     },
+    /* {
+      path: '/BookingPageDetail/:docid/detail',
+      name: 'BookingPageDetail',
+      component: BookingPage,
+      props: true,
+      
+    }, */
     {
       path: '/:catchAll(.*)',
       name: 'NotFound',
