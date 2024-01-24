@@ -16,6 +16,9 @@
             </div>
         </div>
         <!-- /Page Header -->
+        <div v-if="loadingImage">
+            <center>  <img src="/img/loadingImage.gif"></center>
+            </div>
         <div class="row">
             <div class="col-md-12">
             
@@ -102,6 +105,7 @@ export default {
         return {
             appointmentData: [],
             userInfo: null,
+            loadingImage:false,
             /*  id:'',
              doctorname:'',
              doctorPhot:'',
@@ -126,13 +130,16 @@ export default {
     },
    
     async mounted() {
+        this.loadingImage=true
         await this.storeAppointInfo.getAllAppointmentForAdmin()
        // await this.storeAppointInfo.getAllPatient()
        this.appointmentData = await this.storeAppointInfo.getAllAppointmentDataAdmin
         console.log('appointmentInfo', this.appointmentData)
+        this.loadingImage=false
   },
   methods:{
     async check(e){
+        this.loadingImage=true
     console.log('checked',e.target.checked)
     console.log('value',e.target.value)
     if(e.target.value){
@@ -141,6 +148,7 @@ export default {
        // await this.storeAppointInfo.getAllPatient()
        this.appointmentData = await this.storeAppointInfo.getAllAppointmentDataAdmin
     }
+    this.loadingImage=false
    
     }
     

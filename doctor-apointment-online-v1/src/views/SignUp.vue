@@ -1,7 +1,8 @@
 
 <template>
     <HomeHeader></HomeHeader>
-    <RegForm ></RegForm>
+    <RegForm></RegForm>
+    <br>
     <Footer></Footer>    
     </template>
     <script>
@@ -11,7 +12,6 @@
     
     export default {
         name:'LogIn',
-       
         components:{
             HomeHeader,Footer,RegForm,
         }
