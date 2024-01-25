@@ -1,0 +1,1 @@
+This project is designed for educational purposes and serves as an assignment to facilitate learning about the Vue.js framework. It is available for download, providing an opportunity for individuals to explore and enhance their skills in Vue.js technology.
